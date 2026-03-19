@@ -38,7 +38,7 @@ export async function POST(request: Request) {
     })
   } catch (error) {
     console.error('[sloth-dialogue] error:', error)
-    return new Response(JSON.stringify({ error: 'Mochi is napping, try again.' }), {
+    return new Response(JSON.stringify({ error: 'Cha is napping, try again.' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     })
