@@ -3,7 +3,7 @@
 import { useGLTF } from '@react-three/drei'
 
 export function KoreanBakeryModel() {
-  const { scene } = useGLTF('/models/korean_bakery.glb')
+  const { scene } = useGLTF('/models/bakery_exterior.glb')
   return (
     <group>
       {/* Floating island platform — tapered cylinder so the bottom is naturally hidden */}
@@ -22,4 +22,4 @@ export function KoreanBakeryModel() {
   )
 }
 
-useGLTF.preload('/models/korean_bakery.glb')
+useGLTF.preload('/models/bakery_exterior.glb')

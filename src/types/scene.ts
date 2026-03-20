@@ -55,8 +55,8 @@ export const CAMERA_TARGETS: Record<SceneObject, CameraTarget> = {
 }
 
 export const CAMERA_DEFAULT: CameraTarget = {
-  position: [0, 1.6, 4],
-  lookAt: [0, 1.2, 0],
+  position: [0, 1.3, 2.5],
+  lookAt: [0, 1.0, 0],
   duration: 1.6,
   ease: 'power2.inOut',
 }
