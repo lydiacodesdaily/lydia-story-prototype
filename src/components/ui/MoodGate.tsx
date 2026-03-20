@@ -19,28 +19,22 @@ export function MoodGate() {
   }
 
   return (
-    <div className="fixed inset-0 flex flex-col items-center justify-center bg-[#0d1a0f] overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-radial from-matcha-900/30 via-transparent to-transparent" />
-
-      {/* Floating matcha steam effect */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full bg-matcha-600/5 blur-3xl animate-pulse" />
-
+    <div className="fixed inset-0 flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm overflow-hidden">
       <div className="relative z-10 flex flex-col items-center gap-8 px-6 text-center">
         {/* Logo / title */}
         <div className="flex flex-col items-center gap-2">
           <span className="text-5xl">🦥</span>
           <h1 className="text-white text-2xl font-light tracking-widest uppercase">
-            Sloth Matcha
+            Cha&apos;s Bakery
           </h1>
-          <p className="text-white/40 text-sm tracking-wider">a portfolio tea house</p>
+          <p className="text-white/40 text-sm tracking-wider">a portfolio experience</p>
         </div>
 
         {/* Sloth greeting */}
         <div className="bg-white/5 border border-white/10 rounded-2xl px-6 py-4 max-w-sm">
           <p className="text-white/80 text-sm leading-relaxed italic">
             &ldquo;Oh, hello... welcome. I&apos;m Cha.{' '}
-            <span className="text-matcha-300">How are you feeling today?</span>&rdquo;
+            <span className="text-matcha-300">Pull up a chair — how are you feeling today?</span>&rdquo;
           </p>
         </div>
 
@@ -69,11 +63,11 @@ export function MoodGate() {
             }
           `}
         >
-          Enter the tea house
+          Enter the bakery
         </button>
 
         <p className="text-white/20 text-xs">
-          click any object inside to explore Lydia&apos;s work
+          click objects inside to explore Lydia&apos;s work
         </p>
       </div>
     </div>

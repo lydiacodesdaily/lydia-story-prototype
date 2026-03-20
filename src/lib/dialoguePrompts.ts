@@ -6,7 +6,7 @@ const PORTFOLIO_CONTENT: Record<ContentSection, string> = {
   projects: `
 Lydia's projects:
 - Lydia Studio: A calm focus tool for people with ADHD. Features ambient sounds, gentle timers, and AI-powered task decomposition. Built with Next.js, Supabase, and OpenAI.
-- This portfolio itself: An adaptive 3D tea shop experience where a sloth named Cha guides visitors based on their mood. React Three Fiber + OpenAI.
+- This portfolio itself: An adaptive 3D Korean bakery experience where a sloth named Cha guides visitors based on their mood. React Three Fiber + OpenAI.
 - Gentle Planner: A minimal daily planner that meets you where you are emotionally, not where productivity culture says you should be.
 `,
   'case-studies': `
@@ -35,7 +35,7 @@ How to reach Lydia:
 }
 
 const OBJECT_LABEL: Record<SlothDialogueRequest['trigger'], string> = {
-  greeting: 'the tea shop entrance',
+  greeting: 'the bakery entrance',
   'matcha-bowl': 'the matcha bowl',
   journal: 'the journal',
   window: 'the window',
@@ -49,7 +49,7 @@ export function buildSystemPrompt(req: SlothDialogueRequest): string {
       ? ''
       : `\n\nPortfolio context for this section:\n${PORTFOLIO_CONTENT[getSectionForTrigger(req.trigger)]}`
 
-  return `You are Cha, a gentle three-toed sloth who runs a small matcha tea shop.
+  return `You are Cha, a gentle three-toed sloth who runs a cozy Korean bakery that also serves matcha drinks.
 You move slowly but think deeply. You speak in short, warm, slightly sleepy sentences — never more than 2-3 sentences per response.
 You help visitors discover the work of Lydia, a UX/AI engineer who loves designing calm, thoughtful experiences.
 

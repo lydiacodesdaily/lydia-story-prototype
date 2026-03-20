@@ -15,9 +15,10 @@ import { LoadingScreen } from '@/components/ui/LoadingScreen'
 import { useMoodStore } from '@/store/useMoodStore'
 import { useSlothDialogue } from '@/hooks/useSlothDialogue'
 import { useMoodAudio } from '@/hooks/useMoodAudio'
+import { MoodOrbs } from './objects/MoodOrbs'
 import { useEffect } from 'react'
 
-function SceneInitializer() {
+export function SceneInitializer() {
   const { triggerDialogue } = useSlothDialogue()
   useMoodAudio()
 
@@ -35,33 +36,40 @@ function SceneInitializer() {
 
 export function TeaShopScene() {
   const moodConfig = useMoodStore((s) => s.moodConfig)
+  const hasSelectedMood = useMoodStore((s) => s.hasSelectedMood)
 
   return (
     <div className="fixed inset-0">
       <Canvas
         shadows
         gl={{ antialias: true, alpha: false }}
-        style={{ background: '#0d1a0f' }}
       >
+        <color attach="background" args={['#a8d8f0']} />
         <Suspense fallback={null}>
           <SceneCamera />
           <SceneLighting />
           <SceneEnvironment />
 
-          <group name="shop-objects">
-            <MatchaBowl />
-            <Journal />
-            <WindowFrame />
-            <SlothCharacter />
-            <Headphones />
-          </group>
+          {/* Mood orbs — shown during diorama/selection phase */}
+          {!hasSelectedMood && <MoodOrbs />}
+
+          {/* Interactive objects only shown inside the bakery */}
+          {hasSelectedMood && (
+            <group name="shop-objects">
+              <MatchaBowl />
+              <Journal />
+              <WindowFrame />
+              <SlothCharacter />
+              <Headphones />
+            </group>
+          )}
 
           <MoodPostProcessing />
         </Suspense>
       </Canvas>
 
-      {/* Hint overlay */}
-      {moodConfig && (
+      {/* Hint overlay — only shown after entering */}
+      {hasSelectedMood && moodConfig && (
         <div className="absolute bottom-6 right-6 pointer-events-none">
           <p className="text-white/20 text-xs tracking-wider">
             click objects to explore

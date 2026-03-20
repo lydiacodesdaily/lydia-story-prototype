@@ -6,7 +6,9 @@ interface MoodState {
   mood: Mood | null
   moodConfig: MoodConfig | null
   hasSelectedMood: boolean
+  pendingMood: Mood | null
   setMood: (mood: Mood) => void
+  setPendingMood: (mood: Mood | null) => void
   resetMood: () => void
 }
 
@@ -14,18 +16,23 @@ export const useMoodStore = create<MoodState>((set) => ({
   mood: null,
   moodConfig: null,
   hasSelectedMood: false,
+  pendingMood: null,
 
   setMood: (mood) =>
     set({
       mood,
       moodConfig: MOOD_CONFIGS[mood],
       hasSelectedMood: true,
+      pendingMood: null,
     }),
+
+  setPendingMood: (mood) => set({ pendingMood: mood }),
 
   resetMood: () =>
     set({
       mood: null,
       moodConfig: null,
       hasSelectedMood: false,
+      pendingMood: null,
     }),
 }))

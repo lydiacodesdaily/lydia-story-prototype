@@ -53,16 +53,18 @@ export function SceneLighting() {
   }, [moodConfig])
 
   const initialLighting = moodConfig?.lighting ?? {
-    ambientIntensity: 0.4,
-    ambientColor: '#b8d4e8',
-    keyColor: '#c8dff0',
-    keyIntensity: 1.2,
-    accentColor: '#90b8d0',
-    accentIntensity: 0.6,
+    ambientIntensity: 1.2,
+    ambientColor: '#e8f0f8',
+    keyColor: '#fff8e8',
+    keyIntensity: 3.0,
+    accentColor: '#c8dff0',
+    accentIntensity: 0.8,
   }
 
   return (
     <>
+      {/* Sky/ground hemisphere for natural outdoor fill */}
+      <hemisphereLight args={['#a8c8e8', '#8aab7a', 1.5]} />
       <ambientLight
         ref={ambientRef}
         intensity={initialLighting.ambientIntensity}
@@ -70,18 +72,23 @@ export function SceneLighting() {
       />
       <directionalLight
         ref={keyRef}
-        position={[3, 5, 2]}
+        position={[5, 10, 4]}
         intensity={initialLighting.keyIntensity}
         color={initialLighting.keyColor}
         castShadow
-        shadow-mapSize={[1024, 1024]}
+        shadow-mapSize={[2048, 2048]}
+        shadow-camera-far={30}
+        shadow-camera-left={-10}
+        shadow-camera-right={10}
+        shadow-camera-top={10}
+        shadow-camera-bottom={-10}
       />
       <pointLight
         ref={accentRef}
-        position={[-2, 2, 1]}
+        position={[-3, 3, 2]}
         intensity={initialLighting.accentIntensity}
         color={initialLighting.accentColor}
-        distance={8}
+        distance={12}
       />
     </>
   )
