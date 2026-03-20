@@ -7,11 +7,16 @@ import { SlothDialogueBubble } from '@/components/ui/SlothDialogueBubble'
 import { ContentPanel } from '@/components/ui/ContentPanel'
 import { BreathingCue } from '@/components/ui/BreathingCue'
 import { LoadingScreen } from '@/components/ui/LoadingScreen'
+import { WeatherHUD } from '@/components/ui/WeatherHUD'
+import { useWeather } from '@/hooks/useWeather'
 
 export default function App() {
   const mood = useMoodStore((s) => s.mood)
   const hasEntered = useMoodStore((s) => s.hasEntered)
   const setEntered = useMoodStore((s) => s.setEntered)
+
+  // Fetch geolocation + weather once on mount
+  useWeather()
 
   return (
     <>
@@ -20,6 +25,9 @@ export default function App() {
         <TeaShopScene />
         <SceneInitializer />
       </Suspense>
+
+      {/* Weather + time HUD — shown on exterior home page */}
+      {!hasEntered && <WeatherHUD />}
 
       {/* Enter button overlay — shown on exterior home page */}
       {!hasEntered && (
