@@ -88,7 +88,7 @@ export function SceneCamera() {
             makeDefault
             fov={50}
             near={0.1}
-            far={100}
+            far={600}
             position={[0, 3, 10]}
           />
         </group>

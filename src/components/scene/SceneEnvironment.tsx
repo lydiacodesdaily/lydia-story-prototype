@@ -7,6 +7,8 @@ import { SteamParticles } from './effects/SteamParticles'
 import { KoreanBakeryModel } from './objects/KoreanBakeryModel'
 import { BakeryInteriorModel } from './objects/BakeryInteriorModel'
 import { CelestialBody } from './objects/CelestialBody'
+import { StarField } from './effects/StarField'
+import { CloudLayer } from './effects/CloudLayer'
 import { FogExp2, Color } from 'three'
 import { useThree } from '@react-three/fiber'
 import { useEffect } from 'react'
@@ -57,6 +59,7 @@ export function SceneEnvironment() {
   }, [moodConfig, scene])
 
   const weatherType = useWeatherStore((s) => s.weatherType)
+  const timeOfDay = useWeatherStore((s) => s.timeOfDay)
   const particles = moodConfig?.particles
 
   // On the exterior (before entering), show weather-driven particles instead of mood particles
@@ -85,6 +88,12 @@ export function SceneEnvironment() {
       {showWeatherRain && <RainParticles count={800} speed={0.08} />}
       {showWeatherSnow && <SteamParticles count={400} speed={0.015} type="mist" />}
       {showWeatherFog  && <SteamParticles count={300} speed={0.008} type="mist" />}
+
+      {/* Sky atmosphere — exterior only */}
+      {!hasEntered && (timeOfDay === 'night' || timeOfDay === 'dusk') && <StarField />}
+      {!hasEntered && (timeOfDay === 'morning' || timeOfDay === 'midday' || timeOfDay === 'afternoon') && weatherType !== 'storm' && (
+        <CloudLayer />
+      )}
     </>
   )
 }
