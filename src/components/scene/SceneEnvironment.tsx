@@ -8,6 +8,7 @@ import { KoreanBakeryModel } from './objects/KoreanBakeryModel'
 import { BakeryInteriorModel } from './objects/BakeryInteriorModel'
 import { CelestialBody } from './objects/CelestialBody'
 import { StarField } from './effects/StarField'
+import { ShootingStars } from './effects/ShootingStars'
 import { CloudLayer } from './effects/CloudLayer'
 import { FogExp2, Color } from 'three'
 import { useThree } from '@react-three/fiber'
@@ -91,6 +92,7 @@ export function SceneEnvironment() {
 
       {/* Sky atmosphere — exterior only */}
       {!hasEntered && (timeOfDay === 'night' || timeOfDay === 'dusk') && <StarField />}
+      {!hasEntered && timeOfDay === 'night' && <ShootingStars />}
       {!hasEntered && (timeOfDay === 'morning' || timeOfDay === 'midday' || timeOfDay === 'afternoon') && weatherType !== 'storm' && (
         <CloudLayer />
       )}
