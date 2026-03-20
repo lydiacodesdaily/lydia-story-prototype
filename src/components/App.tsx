@@ -2,7 +2,6 @@
 
 import { Suspense } from 'react'
 import { useMoodStore } from '@/store/useMoodStore'
-import { DioramaHUD } from '@/components/ui/DioramaHUD'
 import { TeaShopScene, SceneInitializer } from '@/components/scene/TeaShopScene'
 import { SlothDialogueBubble } from '@/components/ui/SlothDialogueBubble'
 import { ContentPanel } from '@/components/ui/ContentPanel'
@@ -10,23 +9,38 @@ import { BreathingCue } from '@/components/ui/BreathingCue'
 import { LoadingScreen } from '@/components/ui/LoadingScreen'
 
 export default function App() {
-  const hasSelectedMood = useMoodStore((s) => s.hasSelectedMood)
+  const mood = useMoodStore((s) => s.mood)
+  const hasEntered = useMoodStore((s) => s.hasEntered)
+  const setEntered = useMoodStore((s) => s.setEntered)
 
   return (
     <>
       {/* 3D scene always renders — exterior on home, interior after entering */}
       <Suspense fallback={<LoadingScreen />}>
         <TeaShopScene />
-        {hasSelectedMood && <SceneInitializer />}
+        <SceneInitializer />
       </Suspense>
 
-      {/* Diorama HUD — title + enter button, no overlay */}
-      {!hasSelectedMood && <DioramaHUD />}
+      {/* Enter button overlay — shown on exterior home page */}
+      {!hasEntered && (
+        <div className="fixed inset-0 z-50 flex flex-col items-end justify-end pb-16 pr-16 pointer-events-none">
+          <div className="text-right pointer-events-auto">
+            <button
+              onClick={setEntered}
+              className="px-8 py-3 border border-white/30 text-white/70 text-sm tracking-[0.25em] uppercase hover:border-white/70 hover:text-white transition-all duration-300 cursor-pointer backdrop-blur-sm bg-black/10"
+            >
+              Enter →
+            </button>
+          </div>
+        </div>
+      )}
 
-      {/* In-scene UI after entering */}
-      {hasSelectedMood && (
+      {/* Sloth dialogue + mood UI — only inside the bakery */}
+      {hasEntered && <SlothDialogueBubble />}
+
+      {/* Content panels after mood is selected */}
+      {mood && (
         <>
-          <SlothDialogueBubble />
           <ContentPanel />
           <BreathingCue />
         </>

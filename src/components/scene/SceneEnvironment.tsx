@@ -12,7 +12,7 @@ import { gsap } from 'gsap'
 
 export function SceneEnvironment() {
   const moodConfig = useMoodStore((s) => s.moodConfig)
-  const hasSelectedMood = useMoodStore((s) => s.hasSelectedMood)
+  const hasEntered = useMoodStore((s) => s.hasEntered)
   const { scene } = useThree()
 
   useEffect(() => {
@@ -50,11 +50,11 @@ export function SceneEnvironment() {
 
   return (
     <>
-      {/* Exterior — shown on home page before entering */}
-      {!hasSelectedMood && <KoreanBakeryModel />}
+      {/* Exterior — shown before entering the bakery */}
+      {!hasEntered && <KoreanBakeryModel />}
 
-      {/* Interior — shown after mood selection */}
-      {hasSelectedMood && <BakeryInteriorModel />}
+      {/* Interior — shown after entering */}
+      {hasEntered && <BakeryInteriorModel />}
 
       {particles?.type === 'rain' && (
         <RainParticles count={particles.density} speed={particles.speed} />

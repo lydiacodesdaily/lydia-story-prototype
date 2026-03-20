@@ -11,32 +11,17 @@ import { WindowFrame } from './objects/WindowFrame'
 import { SlothCharacter } from './objects/SlothCharacter'
 import { Headphones } from './objects/Headphones'
 import { MoodPostProcessing } from './effects/MoodPostProcessing'
-import { LoadingScreen } from '@/components/ui/LoadingScreen'
 import { useMoodStore } from '@/store/useMoodStore'
-import { useSlothDialogue } from '@/hooks/useSlothDialogue'
 import { useMoodAudio } from '@/hooks/useMoodAudio'
-import { MoodOrbs } from './objects/MoodOrbs'
-import { useEffect } from 'react'
 
 export function SceneInitializer() {
-  const { triggerDialogue } = useSlothDialogue()
   useMoodAudio()
-
-  useEffect(() => {
-    // Greeting after a brief moment for scene to settle
-    const t = setTimeout(() => {
-      triggerDialogue('greeting')
-    }, 800)
-    return () => clearTimeout(t)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) // Only on mount
-
   return null
 }
 
 export function TeaShopScene() {
   const moodConfig = useMoodStore((s) => s.moodConfig)
-  const hasSelectedMood = useMoodStore((s) => s.hasSelectedMood)
+  const hasEntered = useMoodStore((s) => s.hasEntered)
 
   return (
     <div className="fixed inset-0">
@@ -50,11 +35,8 @@ export function TeaShopScene() {
           <SceneLighting />
           <SceneEnvironment />
 
-          {/* Mood orbs — shown during diorama/selection phase */}
-          {!hasSelectedMood && <MoodOrbs />}
-
-          {/* Interactive objects only shown inside the bakery */}
-          {hasSelectedMood && (
+          {/* Interior objects — only rendered after entering */}
+          {hasEntered && (
             <group name="shop-objects">
               <MatchaBowl />
               <Journal />
@@ -68,8 +50,8 @@ export function TeaShopScene() {
         </Suspense>
       </Canvas>
 
-      {/* Hint overlay — only shown after entering */}
-      {hasSelectedMood && moodConfig && (
+      {/* Hint overlay — shown once mood is active */}
+      {moodConfig && (
         <div className="absolute bottom-6 right-6 pointer-events-none">
           <p className="text-white/20 text-xs tracking-wider">
             click objects to explore
@@ -77,15 +59,5 @@ export function TeaShopScene() {
         </div>
       )}
     </div>
-  )
-}
-
-// Wrapper that initializes scene audio + greeting
-export function TeaShopSceneWithInit() {
-  return (
-    <Suspense fallback={<LoadingScreen />}>
-      <SceneInitializer />
-      <TeaShopScene />
-    </Suspense>
   )
 }
